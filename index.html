@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>a-box</title>
+	<link rel="stylesheet" href="./dist/common.css">
+</head>
+<body>
+<button id="openAlert">打开alert</button>
+<button id="openConfirm">打开confirm</button>
+<button id="openPrompt">打开prompt</button>
+<button id="openMessage">打开message</button>
+</body>
+<script src="./dist/a-box.js"></script>
+<script>
+	const box = new ABox()
+	document.querySelector('#openAlert').addEventListener('click', function () {
+		const a = box.alert({
+			title: '提示',
+			content: '这是一个 alert 弹出层',
+			confirm: () => {
+				console.log('确定')
+			}
+		})
+		// setTimeout(() => {
+		// 	a.hide()
+		// }, 3000)
+	})
+	document.querySelector('#openConfirm').addEventListener('click', function () {
+		const a = box.confirm({
+			title: '提示',
+			content: '这是一个 confirm 弹出层',
+			confirm: () => {
+				console.log('确定')
+			},
+			cancel: () => {
+				console.log('取消')
+			}
+		})
+		// setTimeout(() => {
+		// 	a.hide()
+		// }, 3000)
+	})
+	document.querySelector('#openPrompt').addEventListener('click', function () {
+		const a = box.prompt({
+			title: '提示',
+			type: '',
+			confirm: (content) => {
+				console.log(content)
+				console.log('确定')
+			},
+			cancel: () => {
+				console.log('取消')
+			}
+		})
+		// setTimeout(() => {
+		// 	a.hide()
+		// }, 3000)
+	})
+	document.querySelector('#openMessage').addEventListener('click', function () {
+		const a = box.message({
+			content: '一个消息',
+			type: 'warning',
+			close: () => {
+				console.log('close')
+			}
+		})
+		// setTimeout(() => {
+		// 	a.hide()
+		// }, 3000)
+	})
+
+</script>
+</html>

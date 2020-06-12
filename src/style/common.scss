@@ -1,0 +1,156 @@
+$color-success: #67C23A;
+$color-warning: #E6A23C;
+$color-error: #F56C6C;
+
+.a-box-root-container {
+	position: absolute;
+	width: 0;
+	height: 0;
+	font-size: 14px;
+	color: #000;
+	z-index: 2020;
+
+	* {
+		box-sizing: border-box;
+	}
+
+	.a-box-cover {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1000;
+		background: rgba(0, 0, 0, .3);
+	}
+
+	.a-box-header {
+		background: #fff;
+		height: 45px;
+		display: flex;
+		align-items: center;
+		border-bottom: 1px solid #eee;
+		padding: 0 10px;
+		font-weight: 700;
+		font-size: 16px;
+	}
+
+	.a-box-body {
+		background: #fff;
+		padding: 20px 10px;
+		font-size: 14px;
+		color: #444;
+	}
+
+	.a-box-footer {
+		background: #fff;
+		border-top: 1px solid #eee;
+		display: flex;
+		justify-content: flex-end;
+		padding: 10px;
+
+		.a-box-btn {
+			width: 80px;
+			flex: 0 0 80px;
+		}
+	}
+
+	.a-box-btn {
+		flex: 1;
+		background: transparent;
+		outline: none;
+		cursor: pointer;
+		padding: 5px 12px;
+		border: 1px solid #999;
+		border-radius: 3px;
+		font-size: 14px;
+		margin-left: 15px;
+
+		&:active {
+			background: #f7f7f7;
+		}
+	}
+
+	.a-box-input {
+		max-width: 100%;
+		width: 100%;
+		box-shadow: none;
+		border: 1px solid #999;
+		min-height: 35px;
+		border-radius: 3px;
+		outline: none;
+		padding: 0 10px;
+		font-size: 14px;
+	}
+
+	textarea.a-box-input {
+		padding: 5px 10px;
+	}
+
+}
+
+
+.a-box-modal-container {
+	position: fixed;
+	display: block;
+	width: 450px;
+	z-index: 1001;
+	left: 50%;
+	margin: 100px auto;
+	transform: translateX(-50%);
+	overflow: hidden;
+	border-radius: 2px;
+	box-shadow: 2px 2px 5px #666;
+}
+
+.a-box-message-list {
+	position: fixed;
+	top: 0;
+	z-index: 1002;
+	left: 50%;
+	margin: 0 auto;
+	transform: translateX(-50%);
+	display: flex;
+	align-items: flex-end;
+
+	.a-box-message-item {
+		border-radius: 3px;
+		box-shadow: 2px 2px 5px #666;
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+		overflow: hidden;
+		padding: 0 20px;
+		transition: height .3s;
+		margin-top: 15px;
+
+		&.hide {
+			box-shadow: none;
+			height: 0;
+			opacity: 0;
+		}
+
+		&.success {
+			color: $color-success;
+			border: 1px solid transparentize($color-success, .1);
+			background: transparentize($color-success, .9);
+			box-shadow: none;
+		}
+
+		&.error {
+			color: $color-error;
+			border: 1px solid transparentize($color-error, .1);
+			background: transparentize($color-error, .9);
+			box-shadow: none;
+		}
+
+		&.warning {
+			color: $color-warning;
+			border: 1px solid transparentize($color-warning, .1);
+			background: transparentize($color-warning, .9);
+			box-shadow: none;
+		}
+	}
+}
