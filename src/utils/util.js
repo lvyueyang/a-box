@@ -14,7 +14,7 @@ export function createDom({className = '', tagName = 'div', style = {}} = {}) {
 		}
 	}
 	dom.show = () => {
-		dom.style.display = 'block'
+		dom.style.display = ''
 	}
 	dom.hide = () => {
 		dom.style.display = 'none'

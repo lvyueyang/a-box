@@ -4,6 +4,9 @@ const path = require('path')
 const rollup = require('rollup')
 const rollupConfig = require('./rollup.config')
 const {uglify} = require('rollup-plugin-uglify')
+const autoprefixer = require('gulp-autoprefixer')
+const browserSync = require('browser-sync')
+const reload = browserSync.reload
 
 // 监听错误
 function swallowError(error) {
@@ -11,12 +14,20 @@ function swallowError(error) {
 	this.emit('end')
 }
 
+browserSync({
+	server: {
+		baseDir: './',
+		tunnel: true      //可以解决与wenstrom冲突问题
+	}
+})
+
 function scssToCss() {
 	console.log('打包css')
 	src('src/style/common.scss')
 		.pipe(sass())
+		.pipe(autoprefixer())
 		.on('error', swallowError)
-		.pipe(dest('./dist'))
+		.pipe(dest('./lib'))
 }
 
 async function rollupBuild(isBuild = false) {
@@ -42,14 +53,15 @@ const watch_files = [
 task('serve', () => {
 	try {
 		const watcher = watch(watch_files)
-		watcher.on('change', function (path) {
-			if (path.includes(`src/style/`)) {
-				scssToCss()
+		watcher.on('change', async p => {
+			if (p.includes(path.join(`src/style/`))) {
+				await scssToCss()
 			} else {
-				rollupBuild().catch(e => {
+				await rollupBuild().catch(e => {
 					console.error(e)
 				})
 			}
+			reload()
 		})
 	} catch (e) {
 		console.log(e)

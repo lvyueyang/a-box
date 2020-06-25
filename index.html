@@ -6,15 +6,28 @@
 		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>a-box</title>
-	<link rel="stylesheet" href="./dist/common.css">
+	<link rel="stylesheet" href="./lib/common.css">
 </head>
 <body>
 <button id="openAlert">打开alert</button>
 <button id="openConfirm">打开confirm</button>
 <button id="openPrompt">打开prompt</button>
-<button id="openMessage">打开message</button>
+<br>
+<br>
+<button class="openMessage" data-type="info">打开message | info</button>
+<button class="openMessage" data-type="success">打开message | success</button>
+<button class="openMessage" data-type="error">打开message | error</button>
+<button class="openMessage" data-type="warning">打开message | warning</button>
+<br>
+<br>
+<button class="openNotice" data-type="info">打开notice | info</button>
+<button class="openNotice" data-type="success">打开notice | success</button>
+<button class="openNotice" data-type="error">打开notice | error</button>
+<button class="openNotice" data-type="warning">打开notice | warning</button>
+<br>
+<br>
 </body>
-<script src="./dist/a-box.js"></script>
+<script src="./lib/a-box.js"></script>
 <script>
 	const box = new ABox()
 	document.querySelector('#openAlert').addEventListener('click', function () {
@@ -60,17 +73,38 @@
 		// 	a.hide()
 		// }, 3000)
 	})
-	document.querySelector('#openMessage').addEventListener('click', function () {
-		const a = box.message({
-			content: '一个消息',
-			type: 'warning',
-			close: () => {
-				console.log('close')
-			}
+	document.querySelectorAll('.openMessage').forEach(item => {
+		item.addEventListener('click', function () {
+			console.dir(item)
+			const type = item.dataset.type
+			const a = box.message({
+				content: '一个消息',
+				type,
+				close: () => {
+					console.log('close')
+				}
+			})
+			// setTimeout(() => {
+			// 	a.hide()
+			// }, 3000)
 		})
-		// setTimeout(() => {
-		// 	a.hide()
-		// }, 3000)
+	})
+	document.querySelectorAll('.openNotice').forEach(item => {
+		item.addEventListener('click', function () {
+			console.dir(item)
+			const type = item.dataset.type
+			const a = box.notice({
+				title: '这是一个标题',
+				content: '这是内容，这是内容，这是内容这是内容这是内容',
+				type,
+				close: () => {
+					console.log('close')
+				}
+			})
+			// setTimeout(() => {
+			// 	a.hide()
+			// }, 3000)
+		})
 	})
 
 </script>

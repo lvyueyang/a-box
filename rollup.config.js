@@ -4,7 +4,7 @@ const babel = require('rollup-plugin-babel')
 module.exports = {
 	input: 'src/main.js',
 	output: {
-		file: 'dist/a-box.js',
+		file: 'lib/a-box.js',
 		format: 'umd',
 		name: 'ABox',
 		sourcemap: true,

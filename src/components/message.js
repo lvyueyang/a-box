@@ -3,8 +3,7 @@ import {createDom} from '../utils/util'
 const noneFn = () => {
 }
 
-
-class Message {
+export class Message {
 	constructor(rootDom, options = {}) {
 		this.rootDom = rootDom
 		this.options = options
@@ -13,10 +12,32 @@ class Message {
 
 	createTarget() {
 		const target = createDom({
-			className: 'a-box-message-container'
+			className: `a-box-container`
 		})
+		const wrap = createDom({
+			className: `a-box-wrap`
+		})
+		const icon = createDom({
+			className: `a-box-icon`
+		})
+		const body = createDom({
+			className: `a-box-body`
+		})
+		const close = createDom({
+			className: `a-box-close`
+		})
+
+		wrap.appendChild(icon)
+		wrap.appendChild(body)
+		wrap.appendChild(close)
+		target.appendChild(wrap)
+		this.wrap = wrap
+		this.body = body
+		this.icon = icon
+		this.close = close
 		this.target = target
-		const {content} = this.options
+		const {content, type} = this.options
+		this.setType(type)
 		this.setBody(content)
 	}
 
@@ -31,14 +52,18 @@ class Message {
 	}
 
 	setBody(html = '') {
-		this.target.innerHTML = html
+		this.body.innerHTML = html
+	}
+
+	setType(name) {
+		this.target.addClass(`a-box-item ` + name)
 	}
 }
 
 export default {
 	install(aBox) {
 		const messageList = createDom({
-			className: 'a-box-message-list',
+			className: `a-box-message-list`,
 			style: {
 				display: 'none'
 			}
@@ -48,11 +73,11 @@ export default {
 		}
 		aBox.rootDom.appendChild(messageList)
 
-		aBox.message = function ({content = '', timer = 2000, type = '', close = noneFn} = {}) {
+		aBox.message = function ({content = '', timer = 2000, type = 'info', close = noneFn} = {}) {
 			const example = new Message(messageList, {
-				content
+				content,
+				type
 			})
-			example.target.addClass('a-box-message-item ' + type)
 
 			function hide() {
 				example.target.addClass('hide')

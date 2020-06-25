@@ -3,6 +3,7 @@ import alert from './components/alert'
 import confirm from './components/confirm'
 import prompt from './components/prompt'
 import message from './components/message'
+import notice from './components/notice'
 
 export default class ABox {
 	constructor() {
@@ -11,6 +12,7 @@ export default class ABox {
 		this.use(confirm)
 		this.use(prompt)
 		this.use(message)
+		this.use(notice)
 	}
 
 	init() {
