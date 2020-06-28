@@ -7,29 +7,88 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>a-box</title>
 	<link rel="stylesheet" href="./lib/common.css">
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			font-size: 16px;
+			padding: 10px;
+			margin: 0;
+			width: 100%;
+		}
+
+		.item {
+			margin-bottom: 20px;
+		}
+
+		button {
+			font-size: 16px;
+			margin: 5px;
+			border-radius: 2px;
+			border: 1px solid #000;
+			background: #fff;
+			padding: 6px 12px;
+			cursor: pointer;
+			outline: none;
+		}
+
+		button:active {
+			background: #f7f7f7;
+		}
+
+		@media (max-width: 750px) {
+			button {
+				margin: 10px 0;
+				width: 100%;
+				padding: 8px 12px;
+			}
+		}
+
+		.demo-1 {
+			position: relative;
+			border: 1px solid #333;
+			padding: 10px;
+			max-width: 750px;
+			height: 150px;
+			margin-top: 10px;
+		}
+	</style>
 </head>
 <body>
-<button id="openAlert">打开alert</button>
-<button id="openConfirm">打开confirm</button>
-<button id="openPrompt">打开prompt</button>
-<br>
-<br>
-<button class="openMessage" data-type="info">打开message | info</button>
-<button class="openMessage" data-type="success">打开message | success</button>
-<button class="openMessage" data-type="error">打开message | error</button>
-<button class="openMessage" data-type="warning">打开message | warning</button>
-<br>
-<br>
-<button class="openNotice" data-type="info">打开notice | info</button>
-<button class="openNotice" data-type="success">打开notice | success</button>
-<button class="openNotice" data-type="error">打开notice | error</button>
-<button class="openNotice" data-type="warning">打开notice | warning</button>
-<br>
-<br>
+<h3 class="title">提示操作框</h3>
+<div class="item">
+	<button id="openAlert">打开alert</button>
+	<button id="openConfirm">打开confirm</button>
+	<button id="openPrompt">打开prompt</button>
+</div>
+<h3 class="title">Message</h3>
+<div class="item">
+	<button class="openMessage" data-type="info">打开message | info</button>
+	<button class="openMessage" data-type="success">打开message | success</button>
+	<button class="openMessage" data-type="error">打开message | error</button>
+	<button class="openMessage" data-type="warning">打开message | warning</button>
+	<button class="openMessage" data-type="none">打开message | 无图标</button>
+</div>
+<h3 class="title">Loading</h3>
+<div class="item">
+	<button class="openLoading" data-type="loading">打开loading</button>
+	<button class="openLoading-local" data-type="loading">局部loading</button>
+	<div class="demo-1" id="Demo1">局部内容</div>
+</div>
+<h3 class="title">Notice通知</h3>
+<div class="item">
+	<button class="openNotice" data-type="info">打开notice | info</button>
+	<button class="openNotice" data-type="success">打开notice | success</button>
+	<button class="openNotice" data-type="error">打开notice | error</button>
+	<button class="openNotice" data-type="warning">打开notice | warning</button>
+</div>
 </body>
 <script src="./lib/a-box.js"></script>
 <script>
 	const box = new ABox()
+
 	document.querySelector('#openAlert').addEventListener('click', function () {
 		const a = box.alert({
 			title: '提示',
@@ -38,10 +97,8 @@
 				console.log('确定')
 			}
 		})
-		// setTimeout(() => {
-		// 	a.hide()
-		// }, 3000)
 	})
+
 	document.querySelector('#openConfirm').addEventListener('click', function () {
 		const a = box.confirm({
 			title: '提示',
@@ -53,10 +110,8 @@
 				console.log('取消')
 			}
 		})
-		// setTimeout(() => {
-		// 	a.hide()
-		// }, 3000)
 	})
+
 	document.querySelector('#openPrompt').addEventListener('click', function () {
 		const a = box.prompt({
 			title: '提示',
@@ -69,25 +124,37 @@
 				console.log('取消')
 			}
 		})
-		// setTimeout(() => {
-		// 	a.hide()
-		// }, 3000)
 	})
+
 	document.querySelectorAll('.openMessage').forEach(item => {
 		item.addEventListener('click', function () {
 			console.dir(item)
 			const type = item.dataset.type
-			const a = box.message({
+			box.message({
 				content: '一个消息',
 				type,
 				close: () => {
 					console.log('close')
 				}
 			})
-			// setTimeout(() => {
-			// 	a.hide()
-			// }, 3000)
 		})
+	})
+
+	document.querySelector('.openLoading').addEventListener('click', function () {
+		const loading = box.loading({content: '这是一个loading', mask: false})
+		setTimeout(() => {
+			loading.setContent('变换内容 2s 后关闭')
+			setTimeout(() => {
+				loading.hide()
+			}, 2000)
+		}, 2000)
+	})
+
+	document.querySelector('.openLoading-local').addEventListener('click', function () {
+		const loading = box.loading({selector: '#Demo1', content: '这是一个局部loading', mask: false})
+		setTimeout(() => {
+			loading.hide()
+		}, 2000)
 	})
 	document.querySelectorAll('.openNotice').forEach(item => {
 		item.addEventListener('click', function () {

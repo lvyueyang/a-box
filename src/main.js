@@ -29,8 +29,13 @@ export default class ABox {
 	}
 
 	// 创建浮层
-	createCover() {
+	createCover(style = {}) {
 		const cover = createDom({className: 'a-box-cover'})
+		for (let i in style) {
+			if (style.hasOwnProperty(i)) {
+				cover.style[i] = style[i]
+			}
+		}
 		cover.show = () => this.rootDom.appendChild(cover)
 		cover.hide = () => this.rootDom.removeChild(cover)
 		return cover

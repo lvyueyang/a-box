@@ -1,4 +1,4 @@
-import {createDom} from '../utils/util'
+import {createDom, getIcon, isMobile} from '../utils/util'
 import {Message} from './message'
 
 const noneFn = () => {
@@ -7,8 +7,8 @@ const noneFn = () => {
 const cName = 'notice'
 
 class Notice extends Message {
-	constructor(rootDom, options = {}) {
-		super(rootDom, options)
+	constructor(options = {}) {
+		super(options)
 		this.createTarget()
 		const title = createDom({
 			className: `a-box-title`
@@ -37,12 +37,14 @@ export default {
 			}
 		})
 		noticeList.close = () => {
-			console.dir(noticeList)
+			if (noticeList.childNodes.length === 0) {
+				noticeList.hide()
+			}
 		}
 		aBox.rootDom.appendChild(noticeList)
 
 		aBox.notice = function ({title = '', content = '', timer = 2000, type = 'info', close = noneFn} = {}) {
-			const example = new Notice(noticeList, {
+			const example = new Notice({
 				content,
 				title,
 				type,
